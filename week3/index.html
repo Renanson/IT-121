@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Data</title>
+</head>
+<body>
+  <h1>Student Data</h1>
+  <ul id="student-list"></ul>
+  <p id="total-students"></p>
+  <p id="lowest-score"></p>
+  <p id="highest-score"></p>
+  <p id="average-score"></p>
+  <script>
+    let grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+    let students = grades.split(", ");
+    students.sort();
+    let totalStudents = students.length;
+    let lowestScore = Infinity;
+    let highestScore = -Infinity;
+    let totalScore = 0;
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    let studentList = document.getElementById("student-list");
+    students.forEach(student => {
+      let [name, score] = student.split("|");
+      let capitalizedName = capitalizeFirstLetter(name);
+
+      let listItem = document.createElement("li");
+      listItem.textContent = `${capitalizedName} - ${score}`;
+      studentList.appendChild(listItem);
+      score = parseInt(score);
+      lowestScore = Math.min(lowestScore, score);
+      highestScore = Math.max(highestScore, score);
+      totalScore += score;
+    });
+    let averageScore = totalScore / totalStudents;
+    document.getElementById("total-students").textContent = `Total number of students: ${totalStudents}`;
+    document.getElementById("lowest-score").textContent = `Lowest score: ${lowestScore}`;
+    document.getElementById("highest-score").textContent = `Highest score: ${highestScore}`;
+    document.getElementById("average-score").textContent = `Average score: ${averageScore}`;
+  </script>
+</body>
+</html>
