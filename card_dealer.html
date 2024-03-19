@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+
+<h1>Robo Dealer</h1>
+
+  <button onclick="dealHand();">Deal Hand</button>
+
+<hr><div id="card_hand"></div>
+
+<script>
+
+  function Card(value, suit) {
+    this.value = value;
+    this.suit = suit;
+  }
+  const suits = ['Hearts', 'Spades', 'Diamonds', 'Clubs'];
+  const deck = [];
+  for (let i = 2; i <= 14; i++) {
+    for (let j = 0; j < suits.length; j++) {
+      let card = new Card(i, suits[j]);
+      deck.push(card);
+    }
+  }
+
+  const dealHand = () => {
+    $("#card_hand").empty();
+    const hand = [];
+    const drawnIndexes = [];
+    while (hand.length < 5) {
+      const randomIndex = Math.floor(Math.random() * 52);
+      if (!drawnIndexes.includes(randomIndex)) {
+        hand.push(deck[randomIndex]);
+        drawnIndexes.push(randomIndex);
+      }
+    }
+   
+    hand.forEach(card => {
+      let cardValue = card.value;
+      if (card.value === 11) cardValue = 'Jack';
+      else if (card.value === 12) cardValue = 'Queen';
+      else if (card.value === 13) cardValue = 'King';
+      else if (card.value === 14) cardValue = 'Ace';
+      $("#card_hand").append(`<p>${cardValue} of ${card.suit}</p>`);
+    });
+
+
+    return false; // prevent page reload
+  }
+
+</script>
+
+</body>
+</html>
